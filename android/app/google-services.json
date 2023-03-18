@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "995326644569",
+    "project_id": "zariya-8a0fb",
+    "storage_bucket": "zariya-8a0fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995326644569:android:00d51f97b981e09c25fc48",
+        "android_client_info": {
+          "package_name": "com.example.zariya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995326644569-61e0b3p0u4ve4vtfpdkhqeavtldjg2e5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zariya",
+            "certificate_hash": "277515aea411b0013044a346ebc5801091329e23"
+          }
+        },
+        {
+          "client_id": "995326644569-b845993ivp4st015260n0socn2rei5ip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA8O8ms5fcpwVn9pB1rLDBnxHxzgHm5DA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995326644569-b845993ivp4st015260n0socn2rei5ip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
