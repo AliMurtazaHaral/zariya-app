@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zariya/screens/payment_methods/stripe_payment.dart';
+import 'package:zariya/screens/person_dashboard/donation_campaign_screen.dart';
 
 import '../../models/user_model.dart';
 import 'compaign_form.dart';
@@ -191,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           minWidth: MediaQuery.of(context).size.width * 0.3,
                           onPressed: () {
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=> const StripePayment()));
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=> const DonationCampaignScreen()));
                           },
                           //SelectCategoryScreen()
                           child: const Text(
@@ -269,43 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.05,
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color(0xFFE5F2F0),
-                              //Color(0xFFFDEFE5),
-                              borderRadius: BorderRadius.all(Radius.circular(20.0))
-                          ),
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          width: MediaQuery.of(context).size.height * 0.15,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: GestureDetector(
-                              onTap: (){
 
-                              },
-                              child: const Image(
-                                  color: Color(0xFF229DA3),
-                                  //Color(0xFFF89706),
-                                  image: AssetImage(
-                                    "assets/food.png",
-                                  )),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                        const Text("Food",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                          ),)
-                      ],
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.05,
-                    ),
                     Column(
                       children: [
                         Container(

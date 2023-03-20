@@ -16,8 +16,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   bool isHidden = true;
   void togglePasswordView() {
     setState(() {
@@ -27,69 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextFormField(
-      autofocus: false,
-      controller: userNameController,
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (value) {
-        userNameController.text = value!;
-      },
-      style: TextStyle(color: Colors.black),
-      textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        fillColor: Color(0XFFffffff),
-        filled: true,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0XFF0DF5E3)),
-        ),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: " Email",
-        prefixIcon: Icon(
-          Icons.email,
-          color: Colors.grey,
-        ),
-        hintStyle: TextStyle(
-          color: Colors.grey, // <-- Change this
-          fontSize: null,
-          fontStyle: FontStyle.normal,
-        ),
-      ),
-    );
-    final passwordField = TextFormField(
-      autofocus: false,
-      controller: passwordController,
-      obscureText: isHidden,
-      onSaved: (value) {
-        passwordController.text = value!;
-      },
-      style: TextStyle(color: Colors.black),
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0XFF0DF5E3)),
-        ),
-        fillColor: Color(0XFFffffff),
-        filled: true,
-        prefixIcon: Icon(
-          Icons.lock,
-          color: Colors.grey,
-        ),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: " Password",
-        suffix: InkWell(
-          onTap: togglePasswordView,
-          child: Icon(
-            isHidden ? Icons.visibility : Icons.visibility_off,
-            color: Colors.grey,
-          ),
-        ),
-        hintStyle: TextStyle(
-          color: Colors.grey, // <-- Change this
-          fontSize: null,
-          fontStyle: FontStyle.normal,
-        ),
-      ),
-    );
     return Scaffold(
       backgroundColor: const Color(0xFF3eb489),
       body: SingleChildScrollView(

@@ -149,7 +149,7 @@ class _InboxScreenState extends State<InboxScreen> {
                                         child:
                                         Container(
                                           decoration: BoxDecoration(
-                                              color: Color(0XFFec4d4d),
+                                              color: const Color(0XFFec4d4d),
                                               borderRadius:
                                               BorderRadius.circular(10.0)),
                                           padding: const EdgeInsets

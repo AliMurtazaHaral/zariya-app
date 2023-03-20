@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zariya/screens/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../models/user_model.dart';
+import '../../models/user_model.dart';
 
 class SignupDonorScreen extends StatefulWidget {
   const SignupDonorScreen({Key? key}) : super(key: key);

@@ -1,15 +1,22 @@
 import 'dart:convert';
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:zariya/screens/person_dashboard/dashboard_screen.dart';
+import 'package:zariya/screens/person_dashboard/rate_donation_screen.dart';
+
+import '../../models/user_model.dart';
 
 
 class StripePayment extends StatefulWidget {
-  const StripePayment({Key? key}) : super(key: key);
-
+  StripePayment({Key? key,required this.uId,required this.raisedAmount}) : super(key: key);
+  String? raisedAmount;
+  String? uId;
   @override
   State<StripePayment> createState() => _StripePaymentState();
 }
@@ -17,6 +24,7 @@ class StripePayment extends StatefulWidget {
 class _StripePaymentState extends State<StripePayment> {
   Map<String, dynamic>? paymentIntent;
   TextEditingController paymentController = TextEditingController();
+  int total = 0;
   @override
   Widget build(BuildContext context) {
     final paymentField = TextFormField(
@@ -62,13 +70,17 @@ class _StripePaymentState extends State<StripePayment> {
             Material(
               elevation: 5,
               borderRadius: BorderRadius.circular(10),
-              color: Colors.black,
+              color: Color(0XFFec4d4d),
               child: MaterialButton(
                 padding: const EdgeInsets.fromLTRB(52, 15, 52, 15),
                 minWidth: MediaQuery.of(context).size.width * 0.3,
                 onPressed: () async{
                   print("pressed");
+
                   await makePayment();
+                  total = int.parse(paymentController.text) + int.parse(widget.raisedAmount.toString());
+                  await postDetailsToFirestore();
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RateScreen(uniId: widget.uId)));
                 },
                 child: const Text(
                   "Make Payment",
@@ -106,7 +118,22 @@ class _StripePaymentState extends State<StripePayment> {
       print('exception:$e$s');
     }
   }
+  final _auth = FirebaseAuth.instance;
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
 
+    // writing all the values
+
+    userModel.raisedAmount = total.toString();
+
+    await firebaseFirestore
+        .collection("campaign")
+        .doc(widget.uId)
+        .update(userModel.toRaisedAmount());
+
+  }
   displayPaymentSheet() async {
 
     try {

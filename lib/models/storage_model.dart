@@ -16,4 +16,14 @@ class StorageModel {
       print(e);
     }
   }
+  Future<void> uploadFileImageCampaign(String? path, String? fileN) async {
+    String? filePath = path;
+    String? fileName = fileN;
+    File file = File(filePath!);
+    try {
+      await storage.ref('campaignImage/$fileName').putFile(file);
+    } on firebase_core.FirebaseException catch (e) {
+      print(e);
+    }
+  }
 }

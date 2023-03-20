@@ -9,6 +9,8 @@ import 'package:zariya/screens/person_dashboard/dashboard_screen.dart';
 import 'package:zariya/screens/person_dashboard/home_screen.dart';
 import 'package:zariya/screens/signup_screen.dart';
 
+import '../models/user_model.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
   @override
@@ -67,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         fillColor: Color(0XFFffffff),
         filled: true,
-        prefixIcon: Icon(Icons.lock,color: Colors.grey,),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.lock,color: Colors.grey,),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: " Password",
         suffix: InkWell(
 
@@ -120,6 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgetPasswordScreen()));
+                },
+                child: const Text('Forget Password?    ',style: TextStyle(
+                    color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15
+                ),),
+              ),
+            ),
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             Material(
@@ -140,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+
             SizedBox(height: 50,),
             Align(
               alignment: Alignment.center,
@@ -181,5 +201,136 @@ class _LoginScreenState extends State<LoginScreen> {
         .catchError((e) {
       Fluttertoast.showToast(msg: "Login is not successful");
     });
+  }
+}
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
+    with TickerProviderStateMixin {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  final emailController = TextEditingController();
+  late AnimationController controller;
+  late Animation<double> animation;
+
+
+  @override
+  Widget build(BuildContext context) {
+    final emailField = TextFormField(
+      autofocus: false,
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (value) {
+        emailController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        filled: true,
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Enter Email Here",
+        hintStyle: const TextStyle(
+          color: Colors.grey, // <-- Change this
+          fontSize: null,
+          fontStyle: FontStyle.normal,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF3eb489),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF3eb489),
+        title: const Align(
+          alignment: Alignment.center,
+          child: Text("Reset Password"),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height*.1,
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'ZARIYA!',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height*.1,
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Forget Password!',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height*.1,
+            ),
+
+            Padding(padding: EdgeInsets.only(left: 20,right: 20),
+            child: emailField,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .05,
+            ),
+            Material(
+              elevation: 5,
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0XFFec4d4d),
+              child: MaterialButton(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                minWidth: MediaQuery.of(context).size.width * 0.8,
+                onPressed: () async{
+                  await resetPassword(emailController.text);
+                },
+                //SelectCategoryScreen()
+                child: const Text(
+                  "Forget Password",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .08,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Future<void> resetPassword(String email) async {
+    if (emailController.text.isNotEmpty) {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+    } else {
+      Fluttertoast.showToast(msg: "You have entered wrong email");
+    }
+  }
+
+  void resetPasswordLink() {
+    resetPassword(emailController.text);
   }
 }

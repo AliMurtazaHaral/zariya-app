@@ -51,6 +51,7 @@ dependencies:
   file_picker:
   flutter_stripe: 4.0.0
   easy_search_bar:
+  flutter_rating_bar:
 dev_dependencies:
   flutter_test:
     sdk: flutter

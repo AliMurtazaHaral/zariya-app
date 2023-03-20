@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zariya/screens/login_screen.dart';
+import 'package:zariya/screens/ngo_signup_screen.dart';
 import 'package:zariya/screens/signup_screen.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
@@ -81,7 +82,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                                 ],
                               ),
                               onTap: () {
-
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignupNGOScreen()));
                               }),
                         ),
                         Text(''),
