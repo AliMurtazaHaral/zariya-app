@@ -101,7 +101,6 @@ class _Compaign_Form_ScreenState extends State<Compaign_Form_Screen> {
                   } else {
                     final path = result?.files.single.path;
                     final fileName = result?.files.single.name;
-                    document_shower = fileName;
                     storageModel
                         .uploadFileImageCampaign(path, fileName)
                         .then((value) => const SnackBar(

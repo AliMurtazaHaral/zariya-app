@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:zariya/screens/person_dashboard/home_screen.dart';
 import 'package:zariya/screens/person_dashboard/inbox_screen.dart';
+import 'package:zariya/screens/person_dashboard/profile_screen.dart';
 import '../../../models/user_model.dart';
 import '../../splash_screen.dart';
 import 'drawer_item.dart';
@@ -57,7 +58,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   name: 'Profile',
                   icon: Icons.account_box_rounded,
                   onPressed: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>const InboxScreen()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen()));
                   }
               ),
               const SizedBox(height: 30,),
@@ -137,7 +138,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   }
   getImg(String s) async {
     final ref = firebase_storage.FirebaseStorage.instance
-        .ref('profileImages/')
+        .ref('profileImage/')
         .child(s);
 
     setState(() async{

@@ -21,8 +21,10 @@ class UserModel {
   String? cmapaignImageReference;
   String? raisedAmount;
   String? rating;
+  String? profileImageReference;
   UserModel(
       {
+        this.profileImageReference,
         this.rating,
         this.raisedAmount,
         this.cmapaignImageReference,
@@ -53,7 +55,8 @@ class UserModel {
         email: map['email'],
         password: map['password'],
         city: map['city'],
-        fullName: map['fullName']
+        fullName: map['fullName'],
+        profileImageReference: map['profileImageReference']
     );
   }
   // sending data to our server
@@ -62,7 +65,14 @@ class UserModel {
       'email': email,
       'password': password,
       'fullName': fullName,
-      'city': city
+      'city': city,
+      'profileImageReference':profileImageReference
+    };
+  }
+  Map<String, dynamic> toMapUpdateUser() {
+    return {
+      'city': city,
+      'profileImageReference':profileImageReference
     };
   }
   Map<String, dynamic> toRaisedAmount() {

@@ -1,9 +1,12 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zariya/models/storage_model.dart';
 import 'package:zariya/screens/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -27,6 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
       isHidden = !isHidden;
     });
   }
+  Reference? getUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +237,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           minWidth: MediaQuery.of(context).size.width * 0.4,
                           height: MediaQuery.of(context).size.height * 0.2,
                           onPressed: () async {
-                            _getFromGallery();
+                            await _getFromGallery();
                           },
 
                           child: Column(children: [
@@ -320,15 +324,18 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 //Get from gallery
   File? imageFile;
+  XFile? pickedFile;
   _getFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
+    pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
       setState(() {
-        imageFile = File(pickedFile.path);
+        imageFile = File('${pickedFile?.path}');
+        StorageModel storageModel = StorageModel();
+        storageModel.uploadProfileImage(pickedFile?.path, pickedFile?.name);
       });
     }
   }
@@ -344,6 +351,7 @@ class _SignupScreenState extends State<SignupScreen> {
     userModel.password = passwordController.text;
     userModel.city = cityController.text;
     userModel.fullName = nameController.text;
+    userModel.profileImageReference = pickedFile?.name;
     await firebaseFirestore
         .collection("users")
         .doc(user?.uid)

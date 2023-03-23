@@ -8,8 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zariya/screens/person_dashboard/dashboard_screen.dart';
 import 'package:zariya/screens/person_dashboard/home_screen.dart';
 import 'package:zariya/screens/signup_screen.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../models/user_model.dart';
+import '../utils/notifications.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -196,6 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((uid) => {
       Fluttertoast.showToast(msg: "Login Successful"),
+    NotificationWidget.showNotifications(title: "ZARIYA", body: "Successfully Logged In", payload: FlutterLocalNotificationsPlugin()),
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard_Screen())),
     })
         .catchError((e) {
@@ -324,6 +326,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
   Future<void> resetPassword(String email) async {
     if (emailController.text.isNotEmpty) {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+
       Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
     } else {
       Fluttertoast.showToast(msg: "You have entered wrong email");
