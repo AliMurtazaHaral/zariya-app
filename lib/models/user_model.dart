@@ -59,6 +59,15 @@ class UserModel {
         profileImageReference: map['profileImageReference']
     );
   }
+  factory UserModel.fromMapDonorRegistration(map) {
+    return UserModel(
+        email: map['email'],
+        password: map['password'],
+        city: map['city'],
+        fullName: map['fullName'],
+        cnic: map['cnic']
+    );
+  }
   // sending data to our server
   Map<String, dynamic> toMapRegistration() {
     return {
@@ -67,6 +76,15 @@ class UserModel {
       'fullName': fullName,
       'city': city,
       'profileImageReference':profileImageReference
+    };
+  }
+  Map<String, dynamic> toMapDonorRegistration() {
+    return {
+      'email': email,
+      'password': password,
+      'fullName': fullName,
+      'city': city,
+      'cnic':cnic
     };
   }
   Map<String, dynamic> toMapUpdateUser() {
@@ -114,16 +132,6 @@ class UserModel {
       'address':address,
       'targetAmount':targetAmount,
       'password':password,
-    };
-  }
-  Map<String, dynamic> toBecomePlayerRegistration() {
-    return {
-      'city': city,
-      'email': email,
-      'userName': userName,
-      'password': password,
-      'address': address,
-      'profession': 'Player'
     };
   }
   Map<String, dynamic> toTask() {
